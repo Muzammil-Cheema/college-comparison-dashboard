@@ -1,15 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { getSharedSchoolData } from "../shared-data.js";
 
-const SAMPLE_DATA = [
-  { school: "School A", netPrice: 18000, earnings: 52000 },
-  { school: "School B", netPrice: 24000, earnings: 61000 },
-  { school: "School C", netPrice: 28000, earnings: 70000 },
-  { school: "School D", netPrice: 32000, earnings: 74000 },
-  { school: "School E", netPrice: 36000, earnings: 76000 },
-  { school: "School F", netPrice: 42000, earnings: 82000 }
-];
-
-export function initScatterplot(cardSelector) {
+export async function initScatterplot(cardSelector) {
   const card = document.querySelector(cardSelector);
 
   if (!card) {
@@ -21,10 +13,15 @@ export function initScatterplot(cardSelector) {
     existingPlaceholder.remove();
   }
 
+  const data = await getSharedSchoolData();
+  if (!data.length) {
+    return;
+  }
+
   card.innerHTML = `
-    <div class="scatterplot-root" role="img" aria-label="Sample scatter plot showing net price versus median earnings.">
+    <div class="scatterplot-root" role="img" aria-label="Scatter plot showing net price versus median earnings for the shared 50-school sample.">
       <div class="scatterplot-title">Scatter Plot</div>
-      <div class="scatterplot-subtitle">Sample D3 scaffold: Net Price vs. Median Earnings</div>
+      <div class="scatterplot-subtitle">Shared fake data: Net Price vs. Median Earnings (50 schools)</div>
       <svg class="scatterplot-svg"></svg>
     </div>
   `;
@@ -33,10 +30,10 @@ export function initScatterplot(cardSelector) {
   const svg = d3.select(card).select(".scatterplot-svg");
 
   const rootBounds = root.getBoundingClientRect();
-  const width = Math.max(420, rootBounds.width - 10);
-  const height = Math.max(250, rootBounds.height - 56);
+  const width = Math.max(260, rootBounds.width - 10);
+  const height = Math.max(210, rootBounds.height - 56);
 
-  const margin = { top: 8, right: 16, bottom: 44, left: 58 };
+  const margin = { top: 8, right: 16, bottom: 52, left: 70 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
@@ -48,34 +45,43 @@ export function initScatterplot(cardSelector) {
 
   const x = d3
     .scaleLinear()
-    .domain(d3.extent(SAMPLE_DATA, (d) => d.netPrice))
+    .domain(d3.extent(data, (d) => d.netPrice))
     .nice()
     .range([0, innerWidth]);
 
   const y = d3
     .scaleLinear()
-    .domain(d3.extent(SAMPLE_DATA, (d) => d.earnings))
+    .domain(d3.extent(data, (d) => d.medianEarnings))
     .nice()
     .range([innerHeight, 0]);
 
-  chart
+  const xAxis = chart
     .append("g")
     .attr("transform", `translate(0,${innerHeight})`)
     .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format("$.2s")));
 
-  chart.append("g").call(d3.axisLeft(y).ticks(6).tickFormat(d3.format("$.2s")));
+  xAxis.selectAll("text").attr("fill", "#53645d").attr("font-size", 14);
+  xAxis.select(".domain").attr("stroke", "#c9d9d0");
+
+  const yAxis = chart.append("g").call(d3.axisLeft(y).ticks(6).tickFormat(d3.format("$.2s")));
+
+  yAxis.selectAll("text").attr("fill", "#53645d").attr("font-size", 14);
+  yAxis.select(".domain").attr("stroke", "#c9d9d0");
 
   chart
     .selectAll("circle")
-    .data(SAMPLE_DATA)
+    .data(data)
     .join("circle")
     .attr("cx", (d) => x(d.netPrice))
-    .attr("cy", (d) => y(d.earnings))
-    .attr("r", 6)
+    .attr("cy", (d) => y(d.medianEarnings))
+    .attr("r", 4.5)
     .attr("fill", "#176b5c")
-    .attr("fill-opacity", 0.8)
+    .attr("fill-opacity", 0.72)
     .append("title")
-    .text((d) => `${d.school}\nNet Price: ${d3.format("$,.0f")(d.netPrice)}\nEarnings: ${d3.format("$,.0f")(d.earnings)}`);
+    .text(
+      (d) =>
+        `${d.school}\nNet Price: ${d3.format("$,.0f")(d.netPrice)}\nEarnings: ${d3.format("$,.0f")(d.medianEarnings)}`
+    );
 
   chart
     .append("text")
@@ -83,16 +89,16 @@ export function initScatterplot(cardSelector) {
     .attr("y", innerHeight + 36)
     .attr("text-anchor", "middle")
     .attr("fill", "#53645d")
-    .attr("font-size", 11)
+    .attr("font-size", 16)
     .text("Average Net Price");
 
   chart
     .append("text")
     .attr("transform", "rotate(-90)")
     .attr("x", -innerHeight / 2)
-    .attr("y", -40)
+    .attr("y", -52)
     .attr("text-anchor", "middle")
     .attr("fill", "#53645d")
-    .attr("font-size", 11)
+    .attr("font-size", 16)
     .text("Median Earnings");
 }

@@ -8,13 +8,13 @@
 
 .scatterplot-title {
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  font-size: clamp(0.88rem, 1.15vw, 1.05rem);
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
   font-weight: 600;
   color: #1c2a25;
 }
 
 .scatterplot-subtitle {
-  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+  font-size: clamp(0.86rem, 1.02vw, 0.98rem);
   color: #53645d;
 }
 
