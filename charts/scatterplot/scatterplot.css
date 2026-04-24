@@ -1,0 +1,25 @@
+.scatterplot-root {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.25rem;
+}
+
+.scatterplot-title {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: clamp(0.88rem, 1.15vw, 1.05rem);
+  font-weight: 600;
+  color: #1c2a25;
+}
+
+.scatterplot-subtitle {
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+  color: #53645d;
+}
+
+.scatterplot-svg {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
