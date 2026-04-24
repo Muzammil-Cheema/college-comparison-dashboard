@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Archivo", "Segoe UI", sans-serif;
+  color: var(--text-strong);
+  background: linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}

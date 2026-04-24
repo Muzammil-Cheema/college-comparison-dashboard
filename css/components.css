@@ -1,0 +1,77 @@
+.header-copy {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.dashboard-header h1 {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: clamp(0.78rem, 1.1vw, 0.9rem);
+}
+
+.chart-card {
+  min-height: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-border);
+  background: var(--surface);
+  box-shadow: 0 12px 22px -20px var(--surface-shadow);
+  padding: 0.65rem;
+  display: flex;
+}
+
+.chart-placeholder {
+  width: 100%;
+  border-radius: calc(var(--radius-md) - 3px);
+  border: 1px dashed color-mix(in srgb, var(--accent) 55%, #88b3a5 45%);
+  background: linear-gradient(155deg, #f3f8f4, var(--accent-soft));
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: var(--gap-md);
+  padding: 0.6rem;
+}
+
+.chart-placeholder h2 {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: clamp(0.88rem, 1.25vw, 1.15rem);
+  letter-spacing: 0.02em;
+}
+
+.chart-placeholder p {
+  color: var(--text-muted);
+  font-size: clamp(0.72rem, 0.95vw, 0.88rem);
+}
+
+@media (max-width: 1150px) {
+  .app-shell {
+    gap: 0.7rem;
+    padding: 0.65rem;
+  }
+
+  .dashboard-main,
+  .row {
+    gap: 0.7rem;
+  }
+
+  .chart-card {
+    padding: 0.5rem;
+  }
+
+  .chart-placeholder {
+    gap: 0.45rem;
+  }
+}

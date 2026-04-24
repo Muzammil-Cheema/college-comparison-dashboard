@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Comparison Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="dashboard-header">
+        <div class="header-copy">
+          <p class="eyebrow">CSE 564 Final Project</p>
+          <h1>College Comparison Dashboard</h1>
+          <p class="subtitle">
+            Affordability, outcomes, and institutional context across selected U.S. colleges
+          </p>
+        </div>
+      </header>
+
+      <main class="dashboard-main" role="main" aria-label="Visualization layout">
+        <section class="row row-top" aria-label="Top visualization row">
+          <article class="chart-card" id="ranked-dot-plot-card" aria-label="Ranked dot plot chart card">
+            <div class="chart-placeholder">
+              <h2>Ranked Dot Plot</h2>
+              <p>D3 chart placeholder</p>
+            </div>
+          </article>
+
+          <article class="chart-card" id="bubble-map-card" aria-label="Bubble map chart card">
+            <div class="chart-placeholder">
+              <h2>Bubble Map</h2>
+              <p>D3 chart placeholder</p>
+            </div>
+          </article>
+
+          <article class="chart-card" id="scatter-plot-card" aria-label="Scatter plot chart card">
+            <div class="chart-placeholder">
+              <h2>Scatter Plot</h2>
+              <p>D3 chart placeholder</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="row row-bottom" aria-label="Bottom visualization row">
+          <article class="chart-card" id="time-series-card" aria-label="Time series chart card">
+            <div class="chart-placeholder">
+              <h2>Time Series</h2>
+              <p>D3 chart placeholder</p>
+            </div>
+          </article>
+
+          <article class="chart-card" id="parallel-coordinates-card" aria-label="Parallel coordinates chart card">
+            <div class="chart-placeholder">
+              <h2>Parallel Coordinates</h2>
+              <p>D3 chart placeholder</p>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
