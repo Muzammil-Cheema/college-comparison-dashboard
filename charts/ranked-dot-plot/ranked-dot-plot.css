@@ -1,0 +1,25 @@
+.ranked-dot-plot-root {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.25rem;
+}
+
+.ranked-dot-plot-title {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 600;
+  color: #1c2a25;
+}
+
+.ranked-dot-plot-subtitle {
+  font-size: clamp(0.86rem, 1.02vw, 0.98rem);
+  color: #53645d;
+}
+
+.ranked-dot-plot-svg {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
