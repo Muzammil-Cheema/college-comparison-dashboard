@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { getSharedSchoolData } from "../shared-data.js";
 
 const DIMENSIONS = [
   { key: "netPrice", label: "Net Price", formatter: d3.format("$.2s") },
@@ -9,28 +10,13 @@ const DIMENSIONS = [
   { key: "admissionRate", label: "Admission Rate", formatter: d3.format(".0%") }
 ];
 
-function generateSampleData() {
-  const random = d3.randomLcg(0.564);
-  const randomInRange = (min, max) => min + (max - min) * random();
-
-  return Array.from({ length: 50 }, (_, index) => ({
-    school: `Sample School ${index + 1}`,
-    netPrice: Math.round(randomInRange(12000, 50000)),
-    graduationRate: randomInRange(0.45, 0.96),
-    medianDebt: Math.round(randomInRange(10000, 45000)),
-    medianEarnings: Math.round(randomInRange(35000, 110000)),
-    mobilityRate: randomInRange(0.01, 0.095),
-    admissionRate: randomInRange(0.08, 0.92)
-  }));
-}
-
 function buildLinePath(datum, dimensions, xScale, yScales) {
   return d3.line()(
     dimensions.map((dimension) => [xScale(dimension.key), yScales[dimension.key](datum[dimension.key])])
   );
 }
 
-export function initParallelCoordinates(cardSelector) {
+export async function initParallelCoordinates(cardSelector) {
   const card = document.querySelector(cardSelector);
   if (!card) {
     return;
@@ -41,15 +27,19 @@ export function initParallelCoordinates(cardSelector) {
     placeholder.remove();
   }
 
+  const data = await getSharedSchoolData();
+  if (!data.length) {
+    return;
+  }
+
   card.innerHTML = `
-    <div class="parallel-coordinates-root" role="img" aria-label="Sample parallel coordinates chart with six dimensions and fifty observations.">
+    <div class="parallel-coordinates-root" role="img" aria-label="Parallel coordinates chart with six dimensions and fifty observations from the shared sample dataset.">
       <div class="parallel-coordinates-title">Parallel Coordinates</div>
-      <div class="parallel-coordinates-subtitle">Sample D3 scaffold: 6 attributes across 50 schools</div>
+      <div class="parallel-coordinates-subtitle">Shared fake data: 6 attributes across 50 schools</div>
       <svg class="parallel-coordinates-svg"></svg>
     </div>
   `;
 
-  const data = generateSampleData();
   const root = card.querySelector(".parallel-coordinates-root");
   const svg = d3.select(card).select(".parallel-coordinates-svg");
 

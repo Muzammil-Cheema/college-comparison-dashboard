@@ -1,15 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { getSharedEarningsHistory } from "../shared-data.js";
 
-const SAMPLE_DATA = [
-  { year: 2018, earnings: 56000 },
-  { year: 2019, earnings: 58500 },
-  { year: 2020, earnings: 60000 },
-  { year: 2021, earnings: 62000 },
-  { year: 2022, earnings: 65500 },
-  { year: 2023, earnings: 69000 }
-];
-
-export function initTimeSeries(cardSelector) {
+export async function initTimeSeries(cardSelector) {
   const card = document.querySelector(cardSelector);
 
   if (!card) {
@@ -21,10 +13,24 @@ export function initTimeSeries(cardSelector) {
     placeholder.remove();
   }
 
+  const history = await getSharedEarningsHistory();
+  if (!history.length) {
+    return;
+  }
+
+  const yearlyData = d3
+    .rollups(
+      history,
+      (values) => Math.round(d3.mean(values, (d) => d.earnings) || 0),
+      (d) => d.year
+    )
+    .map(([year, earnings]) => ({ year: Number(year), earnings }))
+    .sort((a, b) => d3.ascending(a.year, b.year));
+
   card.innerHTML = `
-    <div class="time-series-root" role="img" aria-label="Sample time-series line chart showing median earnings over time.">
+    <div class="time-series-root" role="img" aria-label="Time-series line chart showing average earnings over time for the shared school sample.">
       <div class="time-series-title">Time Series</div>
-      <div class="time-series-subtitle">Sample D3 scaffold: Median Earnings Over Time</div>
+      <div class="time-series-subtitle">Shared fake data: Average Earnings Across the Same 50 Schools</div>
       <svg class="time-series-svg"></svg>
     </div>
   `;
@@ -48,12 +54,12 @@ export function initTimeSeries(cardSelector) {
 
   const x = d3
     .scaleLinear()
-    .domain(d3.extent(SAMPLE_DATA, (d) => d.year))
+    .domain(d3.extent(yearlyData, (d) => d.year))
     .range([0, innerWidth]);
 
   const y = d3
     .scaleLinear()
-    .domain(d3.extent(SAMPLE_DATA, (d) => d.earnings))
+    .domain(d3.extent(yearlyData, (d) => d.earnings))
     .nice()
     .range([innerHeight, 0]);
 
@@ -72,7 +78,7 @@ export function initTimeSeries(cardSelector) {
   chart
     .append("g")
     .attr("transform", `translate(0,${innerHeight})`)
-    .call(d3.axisBottom(x).ticks(SAMPLE_DATA.length).tickFormat(d3.format("d")).tickPadding(8))
+    .call(d3.axisBottom(x).ticks(yearlyData.length).tickFormat(d3.format("d")).tickPadding(8))
     .call((g) => g.select(".domain").attr("stroke", "#c9d9d0"))
     .call((g) => g.selectAll("text").attr("fill", "#53645d").attr("font-size", 14));
 
@@ -90,7 +96,7 @@ export function initTimeSeries(cardSelector) {
 
   chart
     .append("path")
-    .datum(SAMPLE_DATA)
+    .datum(yearlyData)
     .attr("fill", "none")
     .attr("stroke", "#176b5c")
     .attr("stroke-width", 2.25)
@@ -98,7 +104,7 @@ export function initTimeSeries(cardSelector) {
 
   chart
     .selectAll("circle")
-    .data(SAMPLE_DATA)
+    .data(yearlyData)
     .join("circle")
     .attr("cx", (d) => x(d.year))
     .attr("cy", (d) => y(d.earnings))
