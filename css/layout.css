@@ -8,6 +8,10 @@
 
 .dashboard-header {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--surface-border);
   background: color-mix(in srgb, var(--surface) 86%, #f2f0e5 14%);
@@ -34,4 +38,11 @@
 
 .row-bottom {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr);
+}
+
+@media (max-width: 900px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

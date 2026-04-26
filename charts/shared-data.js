@@ -1,15 +1,17 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-const SCHOOL_DATA_URL = new URL("../data/shared-schools.csv", import.meta.url);
-const EARNINGS_DATA_URL = new URL("../data/shared-earnings-by-year.csv", import.meta.url);
+const SCHOOL_HISTORY_DATA_URL = new URL("../data/shared-schools-by-year.csv", import.meta.url);
 
-let schoolsPromise;
-let earningsPromise;
+let schoolHistoryPromise;
+let latestYearPromise;
+let sharedSchoolYearsPromise;
+const schoolsByYearPromise = new Map();
 
-function parseSchoolRow(row) {
+function parseSchoolHistoryRow(row) {
   return {
     schoolId: row.schoolId,
     school: row.school,
+    year: Number(row.year),
     netPrice: Number(row.netPrice),
     graduationRate: Number(row.graduationRate),
     medianDebt: Number(row.medianDebt),
@@ -19,25 +21,53 @@ function parseSchoolRow(row) {
   };
 }
 
-function parseEarningsRow(row) {
-  return {
-    schoolId: row.schoolId,
-    school: row.school,
-    year: Number(row.year),
-    earnings: Number(row.earnings)
-  };
+export function getLatestSharedSchoolYear() {
+  if (!latestYearPromise) {
+    latestYearPromise = getSharedSchoolHistory().then((historyRows) =>
+      d3.max(historyRows, (row) => row.year)
+    );
+  }
+
+  return latestYearPromise;
 }
 
-export function getSharedSchoolData() {
-  if (!schoolsPromise) {
-    schoolsPromise = d3.csv(SCHOOL_DATA_URL, parseSchoolRow);
+export function getSharedSchoolYears() {
+  if (!sharedSchoolYearsPromise) {
+    sharedSchoolYearsPromise = getSharedSchoolHistory().then((historyRows) =>
+      [...new Set(historyRows.map((row) => row.year))].sort((a, b) => d3.ascending(a, b))
+    );
   }
-  return schoolsPromise;
+
+  return sharedSchoolYearsPromise;
+}
+
+export async function getSharedSchoolData(year) {
+  const parsedYear = Number(year);
+  const targetYear = Number.isFinite(parsedYear) ? parsedYear : await getLatestSharedSchoolYear();
+
+  if (!schoolsByYearPromise.has(targetYear)) {
+    schoolsByYearPromise.set(
+      targetYear,
+      getSharedSchoolHistory().then((historyRows) =>
+        historyRows
+          .filter((row) => row.year === targetYear)
+          .sort((a, b) => d3.ascending(a.schoolId, b.schoolId))
+      )
+    );
+  }
+
+  return schoolsByYearPromise.get(targetYear);
+}
+
+export function getSharedSchoolHistory() {
+  if (!schoolHistoryPromise) {
+    schoolHistoryPromise = d3.csv(SCHOOL_HISTORY_DATA_URL, parseSchoolHistoryRow);
+  }
+
+  return schoolHistoryPromise;
 }
 
 export function getSharedEarningsHistory() {
-  if (!earningsPromise) {
-    earningsPromise = d3.csv(EARNINGS_DATA_URL, parseEarningsRow);
-  }
-  return earningsPromise;
+  // Keep this alias for backwards compatibility with existing imports.
+  return getSharedSchoolHistory();
 }
