@@ -13,6 +13,18 @@ const EXCLUDED_STATE_IDS = new Set([2, 15, 72]); // Alaska, Hawaii, Puerto Rico
 
 const DEFAULT_BUBBLE_FILL = "#176b5c";
 const DEFAULT_BUBBLE_STROKE = "#0f4f45";
+const DEFAULT_SIZE_ATTRIBUTE = "mobilityRate";
+
+const SIZE_ATTRIBUTES = [
+  { key: "netPrice", label: "Net Price", valueFormat: d3.format("$,.0f") },
+  { key: "graduationRate", label: "Graduation Rate", valueFormat: d3.format(".1%") },
+  { key: "medianDebt", label: "Median Debt", valueFormat: d3.format("$,.0f") },
+  { key: "medianEarnings", label: "Median Earnings", valueFormat: d3.format("$,.0f") },
+  { key: "mobilityRate", label: "Mobility Rate", valueFormat: d3.format(".1%") },
+  { key: "admissionRate", label: "Admission Rate", valueFormat: d3.format(".1%") }
+];
+
+const SIZE_ATTRIBUTE_BY_KEY = new Map(SIZE_ATTRIBUTES.map((attribute) => [attribute.key, attribute]));
 
 function generateSchoolBubbles(schools, contiguousStates, projection) {
   const random = d3.randomLcg(0.564);
@@ -58,11 +70,28 @@ function generateSchoolBubbles(schools, contiguousStates, projection) {
 function showMapError(card, message) {
   card.innerHTML = `
     <div class="bubble-map-root">
-      <div class="bubble-map-title">Bubble Map</div>
-      <div class="bubble-map-subtitle">Unable to load TopoJSON basemap.</div>
+      <div class="bubble-map-header">
+        <div class="bubble-map-heading">
+          <div class="bubble-map-title">Bubble Map</div>
+          <div class="bubble-map-subtitle">Unable to load TopoJSON basemap.</div>
+        </div>
+      </div>
       <div class="bubble-map-error">${message}</div>
     </div>
   `;
+}
+
+function expandFlatDomain([min, max]) {
+  if (!Number.isFinite(min) || !Number.isFinite(max)) {
+    return [0, 1];
+  }
+
+  if (min === max) {
+    const padding = Math.max(Math.abs(min) * 0.05, 0.05);
+    return [Math.max(0, min - padding), max + padding];
+  }
+
+  return [min, max];
 }
 
 export async function initBubbleMap(cardSelector) {
@@ -83,15 +112,37 @@ export async function initBubbleMap(cardSelector) {
   }
 
   card.innerHTML = `
-    <div class="bubble-map-root" role="img" aria-label="Contiguous U.S. TopoJSON bubble map for the shared 50-school sample.">
-      <div class="bubble-map-title">Bubble Map</div>
-      <div class="bubble-map-subtitle">Shared fake data: 50 schools across the contiguous U.S.</div>
+    <div class="bubble-map-root" role="img" aria-label="Contiguous U.S. TopoJSON bubble map for the shared school sample.">
+      <div class="bubble-map-header">
+        <div class="bubble-map-heading">
+          <div class="bubble-map-title">Bubble Map</div>
+          <div class="bubble-map-subtitle"></div>
+        </div>
+        <div class="bubble-map-controls">
+          <label class="bubble-map-control-label" for="bubble-map-size-attribute-select">Size</label>
+          <select class="bubble-map-control-select" id="bubble-map-size-attribute-select"></select>
+        </div>
+      </div>
       <svg class="bubble-map-svg"></svg>
     </div>
   `;
 
   const root = card.querySelector(".bubble-map-root");
+  const subtitle = card.querySelector(".bubble-map-subtitle");
+  const sizeSelect = card.querySelector("#bubble-map-size-attribute-select");
   const svg = d3.select(card).select(".bubble-map-svg");
+
+  SIZE_ATTRIBUTES.forEach((attribute) => {
+    const option = document.createElement("option");
+    option.value = attribute.key;
+    option.textContent = attribute.label;
+    sizeSelect.append(option);
+  });
+
+  let activeSizeAttribute = SIZE_ATTRIBUTE_BY_KEY.get(DEFAULT_SIZE_ATTRIBUTE);
+  let latestPinnedSchoolIds = new Set();
+  sizeSelect.value = activeSizeAttribute.key;
+
   const rootBounds = root.getBoundingClientRect();
   const width = Math.max(260, rootBounds.width - 10);
   const height = Math.max(210, rootBounds.height - 56);
@@ -159,14 +210,6 @@ export async function initBubbleMap(cardSelector) {
     return;
   }
 
-  const mobilityExtent = d3.extent(bubbles, (d) => d.mobilityRate);
-  const mobilityDomain =
-    mobilityExtent[0] === mobilityExtent[1]
-      ? [mobilityExtent[0] - 0.001, mobilityExtent[1] + 0.001]
-      : mobilityExtent;
-
-  const radius = d3.scaleSqrt().domain(mobilityDomain).range([4.6, 8.3]);
-
   const brush = d3
     .brush()
     .extent([
@@ -189,37 +232,47 @@ export async function initBubbleMap(cardSelector) {
 
   const brushLayer = chart.append("g").attr("class", "bubble-map-brush").call(brush);
 
-  chart
+  const bubbleSelection = chart
     .append("g")
-    .selectAll("circle")
+    .selectAll(".bubble-school-point")
     .data(bubbles)
     .join("circle")
     .attr("class", "bubble-school-point")
     .attr("data-school-id", (bubble) => bubble.schoolId)
     .attr("cx", (bubble) => bubble.x)
     .attr("cy", (bubble) => bubble.y)
-    .attr("r", (bubble) => radius(bubble.mobilityRate))
     .attr("fill", DEFAULT_BUBBLE_FILL)
     .attr("fill-opacity", 0.62)
     .attr("stroke", DEFAULT_BUBBLE_STROKE)
     .attr("stroke-opacity", 0.72)
-    .attr("stroke-width", 1.1);
-
-  chart
-    .selectAll(".bubble-school-point")
+    .attr("stroke-width", 1.1)
     .style("cursor", "pointer")
     .on("click", (event, bubble) => {
       togglePinnedSchool(bubble.schoolId, event);
-    })
-    .append("title")
-    .text(
-      (bubble) =>
-        `${bubble.school}\nMobility rate: ${d3.format(".1%")(bubble.mobilityRate)}\nAdmission rate: ${d3.format(".1%")(
-          bubble.admissionRate
-        )}`
-    );
+    });
+
+  bubbleSelection.append("title");
+
+  function updateBubbleEncoding(attribute) {
+    activeSizeAttribute = attribute;
+    subtitle.textContent = `Shared fake data: ${bubbles.length} schools across the contiguous U.S. (size by ${attribute.label})`;
+
+    const values = bubbles.map((bubble) => Number(bubble[attribute.key]));
+    const radiusDomain = expandFlatDomain(d3.extent(values));
+    const radiusScale = d3.scaleSqrt().domain(radiusDomain).range([4.6, 8.3]);
+
+    chart
+      .selectAll(".bubble-school-point")
+      .attr("r", (bubble) => radiusScale(Number(bubble[attribute.key])))
+      .select("title")
+      .text(
+        (bubble) =>
+          `${bubble.school}\n${attribute.label}: ${attribute.valueFormat(Number(bubble[attribute.key]))}`
+      );
+  }
 
   function applyPinnedStyles(pinnedSchoolIds) {
+    latestPinnedSchoolIds = new Set(pinnedSchoolIds);
     const pinnedColorMap = getPinnedColorMap(pinnedSchoolIds);
 
     chart
@@ -233,5 +286,17 @@ export async function initBubbleMap(cardSelector) {
       .attr("stroke-width", (bubble) => (pinnedColorMap.has(bubble.schoolId) ? 1.5 : 1.1));
   }
 
+  sizeSelect.addEventListener("change", (event) => {
+    const nextAttribute = SIZE_ATTRIBUTE_BY_KEY.get(event.target.value);
+    if (!nextAttribute) {
+      event.target.value = activeSizeAttribute.key;
+      return;
+    }
+
+    updateBubbleEncoding(nextAttribute);
+    applyPinnedStyles(latestPinnedSchoolIds);
+  });
+
+  updateBubbleEncoding(activeSizeAttribute);
   subscribePinnedSchools(applyPinnedStyles);
 }
