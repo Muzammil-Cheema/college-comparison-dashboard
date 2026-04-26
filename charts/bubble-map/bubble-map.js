@@ -1,16 +1,27 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import * as topojson from "https://cdn.jsdelivr.net/npm/topojson-client@3/+esm";
+import { getSharedSchoolData } from "../shared-data.js";
+import {
+  getPinnedColorMap,
+  replacePinnedSchools,
+  subscribePinnedSchools,
+  togglePinnedSchool
+} from "../pinned-schools-store.js";
 
 const US_STATES_TOPOJSON_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 const EXCLUDED_STATE_IDS = new Set([2, 15, 72]); // Alaska, Hawaii, Puerto Rico
 
-function generateRandomBubbles(count, contiguousStates, projection) {
+const DEFAULT_BUBBLE_FILL = "#176b5c";
+const DEFAULT_BUBBLE_STROKE = "#0f4f45";
+
+function generateSchoolBubbles(schools, contiguousStates, projection) {
   const random = d3.randomLcg(0.564);
   const points = [];
   let attempts = 0;
-  const maxAttempts = 25000;
+  const maxAttempts = 60000;
+  let schoolIndex = 0;
 
-  while (points.length < count && attempts < maxAttempts) {
+  while (schoolIndex < schools.length && attempts < maxAttempts) {
     attempts += 1;
 
     const lon = -124.8 + (-66.9 - -124.8) * random();
@@ -29,13 +40,16 @@ function generateRandomBubbles(count, contiguousStates, projection) {
       continue;
     }
 
+    const school = schools[schoolIndex];
     points.push({
-      id: points.length + 1,
+      ...school,
       lon,
       lat,
       x: projected[0],
       y: projected[1]
     });
+
+    schoolIndex += 1;
   }
 
   return points;
@@ -62,10 +76,16 @@ export async function initBubbleMap(cardSelector) {
     placeholder.remove();
   }
 
+  const schools = await getSharedSchoolData();
+  if (!schools.length) {
+    showMapError(card, "Unable to load shared school data.");
+    return;
+  }
+
   card.innerHTML = `
-    <div class="bubble-map-root" role="img" aria-label="Contiguous U.S. TopoJSON bubble map with fifty sample schools.">
+    <div class="bubble-map-root" role="img" aria-label="Contiguous U.S. TopoJSON bubble map for the shared 50-school sample.">
       <div class="bubble-map-title">Bubble Map</div>
-      <div class="bubble-map-subtitle">Sample D3 + TopoJSON scaffold: 50 bubbles across the contiguous U.S.</div>
+      <div class="bubble-map-subtitle">Shared fake data: 50 schools across the contiguous U.S.</div>
       <svg class="bubble-map-svg"></svg>
     </div>
   `;
@@ -133,23 +153,85 @@ export async function initBubbleMap(cardSelector) {
     .attr("stroke-width", 0.65)
     .attr("pointer-events", "none");
 
-  const bubbles = generateRandomBubbles(50, contiguousStates, projection);
-  if (bubbles.length === 0) {
-    showMapError(card, "Could not place sample bubbles on the contiguous U.S. geometry.");
+  const bubbles = generateSchoolBubbles(schools, contiguousStates, projection);
+  if (bubbles.length !== schools.length) {
+    showMapError(card, "Could not place all school bubbles on the contiguous U.S. geometry.");
     return;
   }
+
+  const mobilityExtent = d3.extent(bubbles, (d) => d.mobilityRate);
+  const mobilityDomain =
+    mobilityExtent[0] === mobilityExtent[1]
+      ? [mobilityExtent[0] - 0.001, mobilityExtent[1] + 0.001]
+      : mobilityExtent;
+
+  const radius = d3.scaleSqrt().domain(mobilityDomain).range([4.6, 8.3]);
+
+  const brush = d3
+    .brush()
+    .extent([
+      [0, 0],
+      [innerWidth, innerHeight]
+    ])
+    .on("end", (event) => {
+      if (!event.selection) {
+        return;
+      }
+
+      const [[x0, y0], [x1, y1]] = event.selection;
+      const brushedIds = bubbles
+        .filter((bubble) => bubble.x >= x0 && bubble.x <= x1 && bubble.y >= y0 && bubble.y <= y1)
+        .map((bubble) => bubble.schoolId);
+
+      replacePinnedSchools(brushedIds, event.sourceEvent || event);
+      brushLayer.call(brush.move, null);
+    });
+
+  const brushLayer = chart.append("g").attr("class", "bubble-map-brush").call(brush);
 
   chart
     .append("g")
     .selectAll("circle")
     .data(bubbles)
     .join("circle")
+    .attr("class", "bubble-school-point")
+    .attr("data-school-id", (bubble) => bubble.schoolId)
     .attr("cx", (bubble) => bubble.x)
     .attr("cy", (bubble) => bubble.y)
-    .attr("r", 6.5)
-    .attr("fill", "#176b5c")
+    .attr("r", (bubble) => radius(bubble.mobilityRate))
+    .attr("fill", DEFAULT_BUBBLE_FILL)
     .attr("fill-opacity", 0.62)
-    .attr("stroke", "#0f4f45")
+    .attr("stroke", DEFAULT_BUBBLE_STROKE)
     .attr("stroke-opacity", 0.72)
     .attr("stroke-width", 1.1);
+
+  chart
+    .selectAll(".bubble-school-point")
+    .style("cursor", "pointer")
+    .on("click", (event, bubble) => {
+      togglePinnedSchool(bubble.schoolId, event);
+    })
+    .append("title")
+    .text(
+      (bubble) =>
+        `${bubble.school}\nMobility rate: ${d3.format(".1%")(bubble.mobilityRate)}\nAdmission rate: ${d3.format(".1%")(
+          bubble.admissionRate
+        )}`
+    );
+
+  function applyPinnedStyles(pinnedSchoolIds) {
+    const pinnedColorMap = getPinnedColorMap(pinnedSchoolIds);
+
+    chart
+      .selectAll(".bubble-school-point")
+      .attr("fill", (bubble) => pinnedColorMap.get(bubble.schoolId) || DEFAULT_BUBBLE_FILL)
+      .attr("fill-opacity", (bubble) => (pinnedColorMap.has(bubble.schoolId) ? 0.9 : 0.62))
+      .attr("stroke", (bubble) => {
+        const color = pinnedColorMap.get(bubble.schoolId);
+        return color ? d3.color(color).darker(0.7).formatHex() : DEFAULT_BUBBLE_STROKE;
+      })
+      .attr("stroke-width", (bubble) => (pinnedColorMap.has(bubble.schoolId) ? 1.5 : 1.1));
+  }
+
+  subscribePinnedSchools(applyPinnedStyles);
 }

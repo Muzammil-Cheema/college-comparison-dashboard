@@ -30,3 +30,14 @@
   font-size: 0.96rem;
   color: #7a3d34;
 }
+
+.bubble-map-brush .selection {
+  fill: #ff8a2a;
+  fill-opacity: 0.15;
+  stroke: #cf5f00;
+  stroke-width: 1.2px;
+}
+
+.bubble-map-brush .overlay {
+  cursor: crosshair;
+}
