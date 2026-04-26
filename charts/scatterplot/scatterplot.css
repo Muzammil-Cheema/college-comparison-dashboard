@@ -23,3 +23,14 @@
   height: 100%;
   min-height: 0;
 }
+
+.scatter-brush .selection {
+  fill: #ff8a2a;
+  fill-opacity: 0.16;
+  stroke: #cf5f00;
+  stroke-width: 1.2px;
+}
+
+.scatter-brush .overlay {
+  cursor: crosshair;
+}
