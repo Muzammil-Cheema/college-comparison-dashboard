@@ -3,8 +3,11 @@ import { initRankedDotPlot } from "./ranked-dot-plot/ranked-dot-plot.js";
 import { initTimeSeries } from "./time-series/time-series.js";
 import { initParallelCoordinates } from "./parallel-coordinates/parallel-coordinates.js";
 import { initBubbleMap } from "./bubble-map/bubble-map.js";
+import { initHeader } from "../header/header.js";
 
 async function initCharts() {
+  await initHeader();
+
   const results = await Promise.allSettled([
     initRankedDotPlot("#ranked-dot-plot-card"),
     initBubbleMap("#bubble-map-card"),
