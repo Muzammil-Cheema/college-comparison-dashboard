@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./css/variables.css" />
     <link rel="stylesheet" href="./css/base.css" />
     <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./header/header.css" />
     <link rel="stylesheet" href="./css/components.css" />
     <link rel="stylesheet" href="./charts/bubble-map/bubble-map.css" />
     <link rel="stylesheet" href="./charts/ranked-dot-plot/ranked-dot-plot.css" />
@@ -31,6 +32,18 @@
           <p class="subtitle">
             Affordability, outcomes, and institutional context across selected U.S. colleges
           </p>
+        </div>
+        <div class="header-actions" aria-label="Header controls">
+          <select
+            class="header-action-select"
+            id="single-year-select"
+            name="single-year-select"
+            aria-label="Select year for single-year charts"
+          ></select>
+          <button class="header-action-button" id="enable-imputation-button" type="button">
+            Enable Imputation
+          </button>
+          <button class="header-action-button" id="reset-pins-button" type="button">Reset Pins</button>
         </div>
       </header>
 
