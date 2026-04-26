@@ -2,8 +2,21 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto 1fr;
   gap: 0.25rem;
+}
+
+.parallel-coordinates-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.parallel-coordinates-heading {
+  min-width: 0;
+  display: grid;
+  gap: 0.14rem;
 }
 
 .parallel-coordinates-title {
@@ -18,8 +31,108 @@
   color: #53645d;
 }
 
+.parallel-coordinates-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  position: relative;
+}
+
+.parallel-coordinates-control-label {
+  font-size: 0.82rem;
+  color: #4a5d56;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.parallel-coordinates-multiselect {
+  position: relative;
+}
+
+.parallel-coordinates-multiselect-summary {
+  min-width: 10.25rem;
+  max-width: 12.8rem;
+  border: 1px solid #c6d7cf;
+  border-radius: 0.42rem;
+  background: #f6fbf8;
+  color: #28433b;
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 0.34rem 0.42rem;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.parallel-coordinates-multiselect-summary::-webkit-details-marker {
+  display: none;
+}
+
+.parallel-coordinates-multiselect-summary::after {
+  content: "▾";
+  float: right;
+  color: #557067;
+}
+
+.parallel-coordinates-multiselect[open] .parallel-coordinates-multiselect-summary {
+  border-color: #92b4a7;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #92b4a7 28%, transparent);
+}
+
+.parallel-coordinates-multiselect-options {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  width: 13.2rem;
+  max-height: 13rem;
+  overflow: auto;
+  display: grid;
+  gap: 0.16rem;
+  padding: 0.36rem;
+  border: 1px solid #c6d7cf;
+  border-radius: 0.46rem;
+  background: #fbfdfb;
+  box-shadow: 0 0.55rem 1rem rgba(22, 51, 42, 0.14);
+  z-index: 10;
+}
+
+.parallel-coordinates-multiselect-option {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #36524a;
+  font-size: 0.84rem;
+  font-weight: 500;
+  padding: 0.22rem 0.22rem;
+  border-radius: 0.32rem;
+}
+
+.parallel-coordinates-multiselect-option:hover {
+  background: #edf5f1;
+}
+
+.parallel-coordinates-multiselect-option input {
+  margin: 0;
+  accent-color: #176b5c;
+}
+
 .parallel-coordinates-svg {
   width: 100%;
   height: 100%;
   min-height: 0;
+}
+
+@media (max-width: 980px) {
+  .parallel-coordinates-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .parallel-coordinates-controls {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
