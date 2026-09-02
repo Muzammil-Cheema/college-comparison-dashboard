@@ -1,3 +1,10 @@
 .DS_Store
-data/
+.idea/*
+.venv/*
 
+*.pyc
+
+data/*
+!data/merged_college_scorecard_dataset.csv
+!data/merged_college_scorecard_imputed.csv
+!data/schools_metadata.csv
