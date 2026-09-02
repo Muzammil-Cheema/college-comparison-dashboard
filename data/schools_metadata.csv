@@ -1,0 +1,145 @@
+id,school_name,state,college_scorecard_name,latest_instnm,city,zip,locale,degree_urbanization,state_fips,region_id,lat,lon
+100858,Auburn University,AL,Auburn University,Auburn University,Auburn,36849,13,,1,5,32.599378,-85.488258
+100751,The University of Alabama,AL,The University of Alabama,The University of Alabama,Tuscaloosa,35487-0100,12,,1,5,33.211875,-87.545978
+100663,University of Alabama at Birmingham,AL,University of Alabama at Birmingham,University of Alabama at Birmingham,Birmingham,35294-0110,12,,1,5,33.505697,-86.799345
+106458,Arkansas State University,AR,Arkansas State University,Arkansas State University,Jonesboro,72401,13,,5,5,35.842388,-90.679988
+106397,University of Arkansas,AR,University of Arkansas,University of Arkansas,Fayetteville,72701,12,,5,5,36.070009,-94.176981
+106704,University of Central Arkansas,AR,University of Central Arkansas,University of Central Arkansas,Conway,72035-0001,13,,5,5,35.077945,-92.457672
+104151,Arizona State University Campus Immersion,AZ,Arizona State University Campus Immersion,Arizona State University Campus Immersion,Tempe,85287,12,,4,6,33.417721,-111.934383
+104717,Grand Canyon University,AZ,Grand Canyon University,Grand Canyon University,Phoenix,85017,11,,4,6,33.513231,-112.129929
+104179,University of Arizona,AZ,University of Arizona,University of Arizona,Tucson,85721-0066,11,,4,6,32.232672,-110.950815
+110565,California State University-Fullerton,CA,California State University-Fullerton,California State University-Fullerton,Fullerton,92832-3599,21,,6,8,33.881506,-117.885446
+110583,California State University-Long Beach,CA,California State University-Long Beach,California State University-Long Beach,Long Beach,90840-0115,11,,6,8,33.782818,-118.11204
+122409,San Diego State University,CA,San Diego State University,San Diego State University,San Diego,92182-0001,11,,6,8,32.77525,-117.071228
+126818,Colorado State University-Fort Collins,CO,Colorado State University-Fort Collins,Colorado State University-Fort Collins,Fort Collins,80523-0100,12,,8,7,40.574805,-105.080732
+127565,Metropolitan State University of Denver,CO,Metropolitan State University of Denver,Metropolitan State University of Denver,Denver,80217-3362,11,,8,7,39.744202,-105.00504
+126614,University of Colorado Boulder,CO,University of Colorado Boulder,University of Colorado Boulder,Boulder,80309-0017,12,,8,7,40.008781,-105.270823
+128771,Central Connecticut State University,CT,Central Connecticut State University,Central Connecticut State University,New Britain,06050,21,,9,1,41.692502,-72.765991
+130253,Sacred Heart University,CT,Sacred Heart University,Sacred Heart University,Fairfield,06825-1000,21,,9,1,41.220893,-73.243332
+129020,University of Connecticut,CT,University of Connecticut,University of Connecticut,Storrs,06269,31,,9,1,41.809098,-72.249948
+130934,Delaware State University,DE,Delaware State University,Delaware State University,Dover,19901,13,,10,2,39.187173,-75.54053
+130989,Goldey-Beacom College,DE,Goldey-Beacom College,Goldey-Beacom College,Wilmington,19808,21,,10,2,39.741501,-75.689624
+130943,University of Delaware,DE,University of Delaware,University of Delaware,Newark,19716,21,,10,2,39.679577,-75.752822
+133951,Florida International University,FL,Florida International University,Florida International University,Miami,33199,21,,12,5,25.75732,-80.373928
+132903,University of Central Florida,FL,University of Central Florida,University of Central Florida,Orlando,32816,21,,12,5,28.602159,-81.200889
+137351,University of South Florida,FL,University of South Florida,University of South Florida,Tampa,33620-9951,11,,12,5,28.061458,-82.413232
+138558,Abraham Baldwin Agricultural College,GA,Abraham Baldwin Agricultural College,Abraham Baldwin Agricultural College,Tifton,31793-2601,32,,13,5,31.481889,-83.528281
+139940,Georgia State University,GA,Georgia State University,Georgia State University,Atlanta,30303-3083,11,,13,5,33.7527,-84.38667
+139959,University of Georgia,GA,University of Georgia,University of Georgia,Athens,30602,12,,13,5,33.956262,-83.374039
+153603,Iowa State University,IA,Iowa State University,Iowa State University,Ames,50011-2103,13,,19,4,42.026212,-93.648504
+153658,University of Iowa,IA,University of Iowa,University of Iowa,Iowa City,52242-1316,13,,19,4,41.661935,-91.536425
+154095,University of Northern Iowa,IA,University of Northern Iowa,University of Northern Iowa,Cedar Falls,50614-0005,13,,19,4,42.514923,-92.459703
+142115,Boise State University,ID,Boise State University,Boise State University,Boise,83725,12,,16,7,43.604284,-116.203301
+142328,Lewis-Clark State College,ID,Lewis-Clark State College,Lewis-Clark State College,Lewiston,83501-2698,13,,16,7,46.412199,-117.024875
+142285,University of Idaho,ID,University of Idaho,University of Idaho,Moscow,83844-2282,32,,16,7,46.727406,-117.014167
+145813,Illinois State University,IL,Illinois State University,Illinois State University,Normal,61790-1000,22,,17,3,40.509403,-88.990058
+145600,University of Illinois Chicago,IL,University of Illinois Chicago,University of Illinois Chicago,Chicago,60607,11,,17,3,41.871837,-87.650503
+145637,University of Illinois Urbana-Champaign,IL,University of Illinois Urbana-Champaign,University of Illinois Urbana-Champaign,Champaign,61820-5711,13,,17,3,40.104718,-88.229114
+150136,Ball State University,IN,Ball State University,Ball State University,Muncie,47306,13,,18,3,40.203431,-85.409043
+151351,Indiana University-Bloomington,IN,Indiana University-Bloomington,Indiana University-Bloomington,Bloomington,47405-7000,13,,18,3,39.16609,-86.526559
+243780,Purdue University-Main Campus,IN,Purdue University-Main Campus,Purdue University-Main Campus,West Lafayette,47907-2040,13,,18,3,40.428206,-86.914435
+155399,Kansas State University,KS,Kansas State University,Kansas State University,Manhattan,66506,13,,20,4,39.188648,-96.581077
+155317,University of Kansas,KS,University of Kansas,University of Kansas,Lawrence,66045,13,,20,4,38.958549,-95.247567
+156125,Wichita State University,KS,Wichita State University,Wichita State University,Wichita,67260-0124,11,,20,4,37.718882,-97.292361
+156620,Eastern Kentucky University,KY,Eastern Kentucky University,Eastern Kentucky University,Richmond,40475-3102,32,,21,5,37.740845,-84.300796
+157085,University of Kentucky,KY,University of Kentucky,University of Kentucky,Lexington,40506-0032,11,,21,5,38.038911,-84.504747
+157289,University of Louisville,KY,University of Louisville,University of Louisville,Louisville,40292-0001,11,,21,5,38.216862,-85.760412
+159391,Louisiana State University and Agricultural & Mechanical College,LA,Louisiana State University and Agricultural & Mechanical College,Louisiana State University and Agricultural & Mechanical College,Baton Rouge,70803-2750,12,,22,5,30.414986,-91.178921
+160612,Southeastern Louisiana University,LA,Southeastern Louisiana University,Southeastern Louisiana University,Hammond,70402,13,,22,5,30.514652,-90.468676
+160658,University of Louisiana at Lafayette,LA,University of Louisiana at Lafayette,University of Louisiana at Lafayette,Lafayette,70503,12,,22,5,30.212191,-92.020165
+164988,Boston University,MA,Boston University,Boston University,Boston,02215,11,,25,1,42.351118,-71.107942
+167358,Northeastern University,MA,Northeastern University,Northeastern University,Boston,02115-5005,11,,25,1,42.339992,-71.088782
+166629,University of Massachusetts-Amherst,MA,University of Massachusetts-Amherst,University of Massachusetts-Amherst,Amherst,01003,13,,25,1,42.385999,-72.526728
+164076,Towson University,MD,Towson University,Towson University,Towson,21252-0001,13,,24,2,39.393622,-76.611164
+163268,University of Maryland-Baltimore County,MD,University of Maryland-Baltimore County,University of Maryland-Baltimore County,Baltimore,21250,21,,24,2,39.256686,-76.711607
+163286,University of Maryland-College Park,MD,University of Maryland-College Park,University of Maryland-College Park,College Park,20742,21,,24,2,38.988178,-76.944721
+160977,Bates College,ME,Bates College,Bates College,Lewiston,04240,13,,23,1,44.105299,-70.203333
+161253,University of Maine,ME,University of Maine,University of Maine,Orono,04469,23,,23,1,44.899257,-68.669332
+161554,University of Southern Maine,ME,University of Southern Maine,University of Southern Maine,Portland,04103,13,,23,1,43.662863,-70.274247
+170082,Grand Valley State University,MI,Grand Valley State University,Grand Valley State University,Allendale,49401-9403,31,,26,3,42.963001,-85.889826
+171100,Michigan State University,MI,Michigan State University,Michigan State University,East Lansing,48824-1046,13,,26,3,42.73212,-84.476111
+170976,University of Michigan-Ann Arbor,MI,University of Michigan-Ann Arbor,University of Michigan-Ann Arbor,Ann Arbor,48109,12,,26,3,42.278374,-83.73481
+173920,Minnesota State University-Mankato,MN,Minnesota State University-Mankato,Minnesota State University-Mankato,Mankato,56001,13,,27,4,44.146712,-93.99945
+174233,University of Minnesota-Duluth,MN,University of Minnesota-Duluth,University of Minnesota-Duluth,Duluth,55812,13,,27,4,46.817126,-92.084385
+174066,University of Minnesota-Twin Cities,MN,University of Minnesota-Twin Cities,University of Minnesota-Twin Cities,Minneapolis,55455-0213,11,,27,4,44.972851,-93.235464
+179566,Missouri State University-Springfield,MO,Missouri State University-Springfield,Missouri State University-Springfield,Springfield,65897,12,,29,4,37.199258,-93.281281
+178396,University of Missouri-Columbia,MO,University of Missouri-Columbia,University of Missouri-Columbia,Columbia,65211,12,,29,4,38.94531,-92.328843
+179867,Washington University in St Louis,MO,Washington University in St Louis,Washington University in St Louis,St. Louis,63130,21,,29,4,38.647929,-90.310604
+176080,Mississippi State University,MS,Mississippi State University,Mississippi State University,Mississippi State,39762,33,,28,5,33.454852,-88.790139
+176017,University of Mississippi,MS,University of Mississippi,University of Mississippi,University,38677-1848,33,,28,5,34.365529,-89.537434
+176372,University of Southern Mississippi,MS,University of Southern Mississippi,University of Southern Mississippi,Hattiesburg,39406-0001,13,,28,5,31.32661,-89.331236
+180461,Montana State University,MT,Montana State University,Montana State University,Bozeman,59717,13,,30,7,45.666726,-111.048812
+180416,Montana Technological University,MT,Montana Technological University,Montana Technological University,Butte,59701-8997,33,,30,7,46.012868,-112.559511
+180489,The University of Montana,MT,The University of Montana,The University of Montana,Missoula,59812,13,,30,7,46.859312,-113.982912
+199193,North Carolina State University at Raleigh,NC,North Carolina State University at Raleigh,North Carolina State University at Raleigh,Raleigh,27695-7001,11,,37,5,35.785111,-78.674517
+199120,University of North Carolina at Chapel Hill,NC,University of North Carolina at Chapel Hill,University of North Carolina at Chapel Hill,Chapel Hill,27599,13,,37,5,35.911769,-79.050969
+199139,University of North Carolina at Charlotte,NC,University of North Carolina at Charlotte,University of North Carolina at Charlotte,Charlotte,28223-0001,11,,37,5,35.306022,-80.730919
+200332,North Dakota State University-Main Campus,ND,North Dakota State University-Main Campus,North Dakota State University-Main Campus,Fargo,58108-6050,12,,38,4,46.893127,-96.800838
+200217,University of Mary,ND,University of Mary,University of Mary,Bismarck,58504,41,,38,4,46.723767,-100.75274
+200280,University of North Dakota,ND,University of North Dakota,University of North Dakota,Grand Forks,58202-8193,13,,38,4,47.921654,-97.071738
+181002,Creighton University,NE,Creighton University,Creighton University,Omaha,68178,11,,31,4,41.265361,-95.947811
+181394,University of Nebraska at Omaha,NE,University of Nebraska at Omaha,University of Nebraska at Omaha,Omaha,68182-0225,11,,31,4,41.258769,-96.008516
+181464,University of Nebraska-Lincoln,NE,University of Nebraska-Lincoln,University of Nebraska-Lincoln,Lincoln,68588-0419,11,,31,4,40.817598,-96.700508
+182670,Dartmouth College,NH,Dartmouth College,Dartmouth College,Hanover,03755-3529,33,,33,1,43.704115,-72.289949
+183026,Southern New Hampshire University,NH,Southern New Hampshire University,Southern New Hampshire University,Manchester,03106-1045,22,,33,1,43.038922,-71.451842
+183044,University of New Hampshire-Main Campus,NH,University of New Hampshire-Main Campus,University of New Hampshire-Main Campus,Durham,03824-3547,31,,33,1,43.135934,-70.932465
+185590,Montclair State University,NJ,Montclair State University,Montclair State University,Montclair,07043-1624,21,,34,2,40.860414,-74.198141
+184782,Rowan University,NJ,Rowan University,Rowan University,Glassboro,08028,21,,34,2,39.709108,-75.119119
+186380,Rutgers University-New Brunswick,NJ,Rutgers University-New Brunswick,Rutgers University-New Brunswick,New Brunswick,08901-1281,13,,34,2,40.498769,-74.446251
+187648,Eastern New Mexico University-Main Campus,NM,Eastern New Mexico University-Main Campus,Eastern New Mexico University-Main Campus,Portales,88130,33,,35,6,34.175592,-103.34819
+188030,New Mexico State University-Main Campus,NM,New Mexico State University-Main Campus,New Mexico State University-Main Campus,Las Cruces,88003-8001,22,,35,6,32.281568,-106.752069
+187985,University of New Mexico-Main Campus,NM,University of New Mexico-Main Campus,University of New Mexico-Main Campus,Albuquerque,87131,11,,35,6,35.083868,-106.620155
+441900,Nevada State University,NV,Nevada State University,Nevada State University,Henderson,89002,41,,32,8,35.982345,-114.938044
+182281,University of Nevada-Las Vegas,NV,University of Nevada-Las Vegas,University of Nevada-Las Vegas,Las Vegas,89154,12,,32,8,36.106047,-115.138462
+182290,University of Nevada-Reno,NV,University of Nevada-Reno,University of Nevada-Reno,Reno,89557,11,,32,8,39.543642,-119.815377
+193900,New York University,NY,New York University,New York University,New York,10012-1091,11,,36,2,40.729452,-73.997264
+196097,Stony Brook University,NY,Stony Brook University,Stony Brook University,Stony Brook,11794-0701,21,,36,2,40.91476,-73.12046
+196088,University at Buffalo,NY,University at Buffalo,University at Buffalo,Buffalo,14260-1660,21,,36,2,43.000942,-78.789458
+204796,Ohio State University-Main Campus,OH,Ohio State University-Main Campus,Ohio State University-Main Campus,Columbus,43201,11,,39,3,39.999803,-83.007525
+204857,Ohio University-Main Campus,OH,Ohio University-Main Campus,Ohio University-Main Campus,Athens,45701-2979,32,,39,3,39.326798,-82.100985
+201885,University of Cincinnati-Main Campus,OH,University of Cincinnati-Main Campus,University of Cincinnati-Main Campus,Cincinnati,45221-0063,11,,39,3,39.131159,-84.51428
+207388,Oklahoma State University-Main Campus,OK,Oklahoma State University-Main Campus,Oklahoma State University-Main Campus,Stillwater,74078-1015,32,,40,6,36.123085,-97.069743
+206941,University of Central Oklahoma,OK,University of Central Oklahoma,University of Central Oklahoma,Edmond,73034,21,,40,6,35.6552,-97.471508
+207500,University of Oklahoma-Norman Campus,OK,University of Oklahoma-Norman Campus,University of Oklahoma-Norman Campus,Norman,73019-3072,22,,40,6,35.209407,-97.444211
+209542,Oregon State University,OR,Oregon State University,Oregon State University,Corvallis,97331,13,,41,8,44.56395,-123.274723
+209807,Portland State University,OR,Portland State University,Portland State University,Portland,97201,11,,41,8,45.511601,-122.686289
+209551,University of Oregon,OR,University of Oregon,University of Oregon,Eugene,97403,12,,41,8,44.045146,-123.075792
+210571,Albright College,PA,Albright College,Albright College,Reading,19612-5234,13,,42,2,40.361351,-75.909742
+216339,Temple University,PA,Temple University,Temple University,Philadelphia,19122-6096,11,,42,2,39.980546,-75.156859
+215293,University of Pittsburgh-Pittsburgh Campus,PA,University of Pittsburgh-Pittsburgh Campus,University of Pittsburgh-Pittsburgh Campus,Pittsburgh,15260,11,,42,2,40.444388,-79.953254
+217156,Brown University,RI,Brown University,Brown University,Providence,02912,12,,44,1,41.82617,-71.40385
+217420,Rhode Island College,RI,Rhode Island College,Rhode Island College,Providence,02908,21,,44,1,41.842415,-71.46556
+217484,University of Rhode Island,RI,University of Rhode Island,University of Rhode Island,Kingston,02881,21,,44,1,41.484691,-71.527356
+217882,Clemson University,SC,Clemson University,Clemson University,Clemson,29634,22,,45,5,34.679381,-82.835114
+217819,College of Charleston,SC,College of Charleston,College of Charleston,Charleston,29424-0001,12,,45,5,32.784225,-79.939794
+218663,University of South Carolina-Columbia,SC,University of South Carolina-Columbia,University of South Carolina-Columbia,Columbia,29208,12,,45,5,33.996788,-81.026935
+219082,Dakota State University,SD,Dakota State University,Dakota State University,Madison,57042-1799,32,,46,4,44.013014,-97.113358
+219356,South Dakota State University,SD,South Dakota State University,South Dakota State University,Brookings,57007-1898,33,,46,4,44.317485,-96.782139
+219471,University of South Dakota,SD,University of South Dakota,University of South Dakota,Vermillion,57069-2390,32,,46,4,42.786019,-96.925283
+220978,Middle Tennessee State University,TN,Middle Tennessee State University,Middle Tennessee State University,Murfreesboro,37132,12,,47,5,35.848005,-86.360618
+221759,The University of Tennessee-Knoxville,TN,The University of Tennessee-Knoxville,The University of Tennessee-Knoxville,Knoxville,37996,12,,47,5,35.952082,-83.925852
+220862,University of Memphis,TN,University of Memphis,University of Memphis,Memphis,38152,11,,47,5,35.118878,-89.938068
+228723,Texas A&M University-College Station,TX,Texas A&M University-College Station,Texas A&M University-College Station,College Station,77843-1246,12,,48,6,30.618726,-96.336475
+228778,The University of Texas at Austin,TX,The University of Texas at Austin,The University of Texas at Austin,Austin,78705,11,,48,6,30.282825,-97.738273
+225511,University of Houston,TX,University of Houston,University of Houston,Houston,77204-2018,11,,48,6,29.720393,-95.343537
+230038,Brigham Young University,UT,Brigham Young University,Brigham Young University,Provo,84602,12,,49,7,40.250851,-111.649281
+230603,Southern Utah University,UT,Southern Utah University,Southern Utah University,Cedar City,84720,33,,49,7,37.674617,-113.070146
+230764,University of Utah,UT,University of Utah,University of Utah,Salt Lake City,84112-9008,12,,49,7,40.762484,-111.846044
+232186,George Mason University,VA,George Mason University,George Mason University,Fairfax,22030-4444,21,,51,5,38.83195,-77.307063
+232557,Liberty University,VA,Liberty University,Liberty University,Lynchburg,24515,13,,51,5,37.350232,-79.18222
+233921,Virginia Polytechnic Institute and State University,VA,Virginia Polytechnic Institute and State University,Virginia Polytechnic Institute and State University,Blacksburg,24061-0131,13,,51,5,37.229012,-80.423675
+230852,Champlain College,VT,Champlain College,Champlain College,Burlington,05401,13,,50,1,44.473287,-73.202746
+231174,University of Vermont,VT,University of Vermont,University of Vermont,Burlington,05405-0160,13,,50,1,44.477325,-73.196646
+231165,Vermont State University,VT,Vermont State University,Vermont State University,Randolph,05061,43,,50,1,43.939623,-72.604498
+236948,University of Washington-Seattle Campus,WA,University of Washington-Seattle Campus,University of Washington-Seattle Campus,Seattle,98195-4550,11,,53,8,47.65538,-122.30514
+236939,Washington State University,WA,Washington State University,Washington State University,Pullman,99164-5910,32,,53,8,46.730448,-117.158168
+237011,Western Washington University,WA,Western Washington University,Western Washington University,Bellingham,98225-9008,13,,53,8,48.737812,-122.485734
+240444,University of Wisconsin-Madison,WI,University of Wisconsin-Madison,University of Wisconsin-Madison,Madison,53706-1380,11,,55,3,43.075409,-89.404098
+240453,University of Wisconsin-Milwaukee,WI,University of Wisconsin-Milwaukee,University of Wisconsin-Milwaukee,Milwaukee,53211,11,,55,3,43.076848,-87.880488
+240189,University of Wisconsin-Whitewater,WI,University of Wisconsin-Whitewater,University of Wisconsin-Whitewater,Whitewater,53190-1790,32,,55,3,42.835563,-88.742368
+237367,Fairmont State University,WV,Fairmont State University,Fairmont State University,Fairmont,26554-2470,32,,54,5,39.483079,-80.162433
+237525,Marshall University,WV,Marshall University,Marshall University,Huntington,25755,13,,54,5,38.422482,-82.428964
+238032,West Virginia University,WV,West Virginia University,West Virginia University,Morgantown,26506,13,,54,5,39.634371,-79.954391
+240514,Central Wyoming College,WY,Central Wyoming College,Central Wyoming College,Riverton,82501,33,,56,7,43.030556,-108.426738
+240620,Laramie County Community College,WY,Laramie County Community College,Laramie County Community College,Cheyenne,82007-3299,41,,56,7,41.104288,-104.778789
+240727,University of Wyoming,WY,University of Wyoming,University of Wyoming,Laramie,82071,33,,56,7,41.311773,-105.57931
