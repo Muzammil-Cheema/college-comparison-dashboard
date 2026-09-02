@@ -1,92 +1,274 @@
 # College Comparison Dashboard
 
-## Introduction
-Choosing a college is often treated as a ranking problem, but in practice it is a tradeoff problem. Students and families care about affordability, debt, distance from home, quality of life, post-graduation outcomes, and the general character of a campus, and those factors do not move together neatly. A school that looks attractive on one dimension may be far less compelling on another, and static lists rarely make those tensions easy to explore.
+## Overview
+This project is an interactive dashboard for comparing U.S. colleges across affordability, admissions, student aid, and post-graduation outcome measures. Instead of treating college choice as a single ranking problem, the dashboard is built to help users inspect tradeoffs across several linked views at once.
 
-This dashboard is designed to support a more thoughtful comparison process. Instead of trying to produce a single "best" college, it gives users a way to inspect relationships between cost, outcomes, and institutional context from several angles at once. The broader motivation is to create a tool that helps people make better-informed decisions, spot meaningful tradeoffs, and compare peer institutions in a way that feels more transparent than relying on rankings alone.
+The current final project scope is intentionally narrower than the original proposal:
 
-## Current Features
-The current dashboard is a linked prototype built around a shared synthetic dataset. Several charts support pinning and brushing so that a user can move between overview and detail while comparing a subset of schools more closely.
+- The project uses `College Scorecard` as its only real data source.
+- The school sample is the current curated set of `144` schools.
+- All views remain visible on one non-scrolling page.
+- The dashboard supports a raw-data mode and an imputed-data mode.
 
-### Charts
-#### Ranked Dot Plot
-The ranked dot plot shows a single attribute for all schools in the current year and sorts them from highest to lowest. It works well for quick comparisons and for identifying leaders, laggards, and middle-tier schools for metrics such as net price, graduation rate, median debt, median earnings, mobility rate, and admission rate. Users can click dots to pin schools for comparison in other views, and the chart now includes an attribute dropdown so the ranking can be switched between the available metrics.
+## Data Sources
 
-#### Bubble Map
-The bubble map gives a geographic-style view of the school sample and supports brushing and pinning. In its current prototype form, it is best used to get a quick sense of spatial distribution and to select a cluster of schools visually. The map now includes a size dropdown, allowing bubble size to represent different attributes such as net price, graduation rate, debt, earnings, mobility rate, or admission rate rather than staying fixed to a single metric.
+### Primary Dataset
+The dashboard uses processed historical `College Scorecard` data stored in:
 
-#### Scatter Plot
-The scatter plot is used to compare two attributes against one another for the selected year. This view is best for understanding tradeoffs, outliers, and possible "value" patterns, such as schools with lower price but relatively strong earnings. It supports rectangular brushing, which allows a user to select a group of schools from a meaningful region of the plot and pin them for cross-chart comparison. It now also includes separate X-axis and Y-axis dropdowns so the user can change which variables are being compared.
+- `data/merged_college_scorecard_dataset.csv`
+- `data/merged_college_scorecard_imputed.csv`
+- `data/schools_metadata.csv`
 
-#### Time Series
-The time-series view focuses on the schools that have been pinned elsewhere in the dashboard. It is useful for comparing how selected schools change over time and currently supports multiple attributes such as net price, graduation rate, median debt, median earnings, mobility rate, and admission rate. This chart is best for seeing divergence in long-term patterns after a user has already narrowed the candidate set.
+The raw historical Scorecard release is also included in:
 
-#### Parallel Coordinates
-The parallel coordinates plot places several attributes side by side so that a user can trace each school across multiple dimensions at once. This chart is best for multi-attribute comparison, especially when a user wants to see how a school balances affordability, outcomes, and access-related variables rather than looking at only one metric at a time. Pinned schools are emphasized visually so they can stand out from the full sample. The chart now includes an attribute multi-select control, allowing the user to show only the dimensions most relevant to a particular comparison task.
+- `data/College_Scorecard_Raw_Data_03232026/`
+- `data/College_Scorecard_Raw_Data_03232026.zip`
 
-### Chart Controls
-#### Ranked Dot Plot Attribute Dropdown
-This dropdown changes which metric is used for the ranking. It is useful when a user wants to keep the same school set in view but quickly switch between cost, outcomes, mobility, and selectivity-related measures.
+### Available Dashboard Attributes
+The current processed dashboard datasets expose these numeric attributes:
 
-#### Scatter Plot X and Y Dropdowns
-These dropdowns let the user redefine the scatter plot axes. They make the chart much more flexible because the same view can be used to compare many different tradeoffs instead of only one fixed relationship.
+- `netPrice`
+- `graduationRate`
+- `medianDebt`
+- `medianEarnings`
+- `admissionRate`
+- `satAverage`
+- `actMidpoint`
+- `tuitionInState`
+- `tuitionOutOfState`
+- `pellGrantRate`
+- `federalLoanRate`
+- `retentionRate`
 
-#### Bubble Map Size Dropdown
-This dropdown changes which metric controls bubble size on the map. It helps the map serve more than one purpose by allowing geographic context to be paired with different quantitative signals.
+### Time Coverage
+Both merged CSVs contain one row per school per year for `2012` through `2024`, but the live dashboard currently has usable rendered data through `2022`. The `2023` and `2024` rows remain in the files, but they do not survive the runtime parsing step because they do not contain chartable metric values.
 
-#### Time-Series Attribute Dropdown
-This dropdown changes which metric is tracked over time for the currently pinned schools. It is useful for checking whether a group of schools behaves similarly over time across different measures.
+## Current Dashboard Features
 
-#### Parallel Coordinates Attribute Multi-Select
-This control allows the user to choose which dimensions appear in the parallel coordinates chart. It helps reduce clutter and makes the view more focused when only a subset of attributes is relevant to the question being explored.
+### Shared Interactions
+These interactions are shared across the dashboard:
+
+- Single-year coordination across the ranked dot plot, bubble map, scatter plot, and parallel coordinates plot
+- Cross-view pinning by clicking schools directly in charts
+- Shared pinned-school highlighting across all views
+- A maximum pinned set size of `8` schools
+- Color assignment for pinned schools so the same school keeps the same comparison color across views
+- Availability-aware controls that disable attributes with no usable values for the current year
+- Custom hover tooltips across the interactive charts
 
 ### Header Controls
+
 #### Year Selector
-The year selector updates the single-year views so that the ranked dot plot, scatter plot, and parallel coordinates chart all reflect the same selected year. This keeps the dashboard synchronized and makes cross-chart comparisons more consistent.
+The header year selector controls the single-year views. When the year changes, the ranked dot plot, bubble map, scatter plot, and parallel coordinates plot all rerender for that same year.
 
-#### Enable Imputation Button
-This button is currently present as a placeholder for a planned feature. The intention is for it to eventually toggle whether missing values are filled in through an imputation strategy, but that behavior is not active in the current prototype.
+#### Enable Imputation / Disable Imputation
+The imputation button is live. It toggles the dashboard between:
 
-#### Reset Pins Button
-The reset button clears all pinned schools from the dashboard. This is useful after a user finishes one comparison task and wants to start a fresh selection workflow.
+- `raw` mode using `data/merged_college_scorecard_dataset.csv`
+- `imputed` mode using `data/merged_college_scorecard_imputed.csv`
+
+When imputation mode is active, the header displays a disclaimer stating that some values are estimated rather than directly observed.
+
+#### Reset Pins
+The reset button clears the current pinned-school set. It is disabled when nothing is pinned.
+
+### Ranked Dot Plot
+The ranked dot plot shows one selected metric for all schools in the current year.
+
+Current features:
+
+- Dynamic attribute dropdown
+- Ranking from highest to lowest among schools with values for the selected metric
+- Clickable stems and dots for pinning
+- Hover tooltip showing school name, rank, and formatted metric value
+- Automatic fallback if the chosen attribute has no values in the active year
+
+This chart is best for quickly identifying leaders, laggards, and middle-of-the-pack schools for a single metric.
+
+### Bubble Map
+The bubble map shows the selected school sample projected onto a contiguous U.S. map using real latitude and longitude values from `data/schools_metadata.csv`.
+
+Current features:
+
+- Real geographic projection with `geoAlbersUsa`
+- Background state geometry from `us-atlas`
+- Alaska, Hawaii, and Puerto Rico excluded from the rendered map
+- Dynamic bubble size dropdown
+- Hover tooltip showing school name and current bubble-size metric
+- Click-to-pin interaction
+- Rectangular brushing to replace the pinned-school set
+- Automatic disabling of unavailable size attributes for the active year
+
+This chart is best for regional context and geographic selection.
+
+### Scatter Plot
+The scatter plot compares two selected metrics for the current year.
+
+Current features:
+
+- Independent `X` and `Y` attribute dropdowns
+- Availability-aware axis options based on the current year
+- Automatic fallback to valid axis selections when a chosen pairing has no renderable data
+- Hover tooltip showing school name and both formatted metric values
+- Click-to-pin interaction
+- Rectangular brushing to replace the pinned-school set
+
+This chart is best for tradeoff analysis, outlier detection, and value-style comparisons.
+
+### Time Series
+The time-series chart shows metric history only for the currently pinned schools.
+
+Current features:
+
+- Dynamic attribute dropdown
+- Multi-line comparison over time for pinned schools
+- Shared pinned-school colors
+- Empty states when no schools are pinned or when pinned schools lack values for the selected metric
+- Automatic reload when the dashboard switches between raw and imputed dataset modes
+- Hover tooltips on both lines and points
+
+This chart is best for seeing whether a shortlisted set of schools has converged, diverged, or stayed stable over time.
+
+### Parallel Coordinates
+The parallel coordinates chart compares schools across multiple metrics at once for the current year.
+
+Current features:
+
+- Attribute multi-select built with a collapsible checklist
+- All available attributes selected by default
+- Automatic disabling of unavailable dimensions for the current year
+- Safeguard that prevents the chart from ending up with zero selected dimensions
+- Click-to-pin interaction on school polylines
+- Hover tooltip listing formatted values across the active dimensions
+- Condensed layout behavior when many dimensions must fit on one page
+- Stronger visual emphasis for pinned schools
+
+This chart is best for multi-attribute profile comparison.
+
+## Data Processing and Imputation Features
+
+### Core Processing Scripts
+The repository includes a working processor pipeline:
+
+- `processor/find_schools.py`
+  - screens schools from the raw Scorecard release using availability-based rules
+- `processor/build_school_year_panel.py`
+  - builds the strict school-year panel used for the merged dashboard CSV
+- `processor/imputation/run_imputation.py`
+  - runs the isolated PCA-style matrix-completion workflow
+- `processor/imputation/tests.py`
+  - lightweight checks for the imputation module
+
+### Imputation Workflow
+The imputation work is real and currently produces:
+
+- `data/merged_college_scorecard_imputed.csv`
+- `processor/imputation/output/imputed-school-year-panel.json`
+- `processor/imputation/output/imputation-metadata.json`
+
+The current imputation module:
+
+- uses a PCA / low-rank matrix-completion approach
+- performs masked cross-validation over candidate ranks
+- selected rank `6` in the latest saved metadata
+- writes provenance-oriented outputs during the processing workflow
+
+Important current limitation:
+
+- the live dashboard does support switching into imputed mode, but it does not yet mark imputed values with per-point visual encodings such as `X` markers inside the charts
+- the main user-facing signal right now is the header disclaimer shown when imputation mode is enabled
+
+### Current Data State
+At the moment:
+
+- the live dashboard is wired to real processed data
+- the raw and imputed dashboard CSVs are both present
+- the school metadata file provides real coordinates
+- the isolated imputation module still defaults to `data/shared-schools-by-year.csv` as its processing input, so the processing path is not fully harmonized around one canonical source file yet
+
+## Running the Dashboard
+
+### Requirements
+
+- A local static web server
+- Internet access
+
+Internet access is required because the client currently loads:
+
+- `D3` from `jsdelivr`
+- `topojson-client` from `jsdelivr`
+- `us-atlas` state geometry from `jsdelivr`
+- Google Fonts
+
+### Quick Start
+From the project root, start a simple local web server.
+
+Example with Python:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open:
+
+```text
+http://localhost:8000/client/
+```
+
+Important note:
+
+- do not open `client/index.html` directly as a `file://` page
+- the dashboard expects module imports and CSV fetches that work correctly only when served through a local server
+
+### Optional Data Regeneration
+If someone wants to regenerate the processed data rather than only view the dashboard, the repo also includes the processor scripts and raw Scorecard data needed for that workflow. The exact processor behavior is documented mainly through the script files themselves and `processor/imputation/README.md`.
 
 ## How to Use the Dashboard
-The dashboard is intended to support different kinds of users, so one useful way to think about it is through short user stories.
 
-### User Story 1: A Family Comparing College Value
-Imagine a student and their family trying to narrow down a large set of college options. They may begin by selecting a year and looking at the scatter plot to find schools that appear to offer a more attractive balance between net price and post-graduation earnings. From there, they can pin a few promising schools and watch those schools appear in the time-series chart, where they can compare how prices or outcomes have changed over time.
+### Recommended Workflow
+1. Open the dashboard in the browser through a local server.
+2. Choose a year from the header selector.
+3. Use the chart-specific dropdowns to choose the metrics most relevant to your comparison.
+4. Click schools in any chart to pin them.
+5. Brush the scatter plot or bubble map when you want to replace the pinned set with a selected group.
+6. Read the time-series chart after pinning schools to compare historical behavior.
+7. Use `Reset Pins` to clear the working set and start another comparison.
+8. Toggle `Enable Imputation` if you want to compare the raw observed dataset against the imputed dataset.
 
-Next, they might use the ranked dot plot to see whether those same schools still look competitive when ranked directly by graduation rate, debt, or mobility rate. If they want to explore geography and distance as part of the decision, they can use the map to focus on a particular area or simply pin a group of nearby institutions. The parallel coordinates chart then helps them judge whether a school that looks good on one measure still seems balanced when finances, quality-of-outcome proxies, and selectivity-related variables are viewed together.
+### Interaction Guidelines
 
-In this type of workflow, the dashboard acts less like a ranking site and more like a guided comparison tool. The family can move between broad screening, local selection, and detailed follow-up without losing sight of the same pinned schools.
+- `Click` a school mark or line to pin or unpin it
+- `Brush` on the scatter plot or bubble map to replace the current pinned set
+- `Hover` to see exact formatted values
+- `Use dropdowns` to change what each chart emphasizes
+- `Watch color consistency` across charts to follow the same pinned school through multiple views
 
-### User Story 2: A University Administrator Benchmarking a School
-Now imagine a university administrator who wants to understand how their institution appears relative to national competitors and peers. They may start by pinning their own school and then identifying nearby competitors in the scatter plot or ranked dot plot. If their institution looks strong on affordability but weaker on earnings, or vice versa, that pattern becomes visible immediately.
+### What Each View Is Best For
 
-The administrator can then use the time-series chart to compare whether those gaps are stable or whether they have widened or narrowed over recent years. The parallel coordinates chart is especially useful in this setting because it shows whether a school's public image or standing is tied to only one strength or to a broader combination of attributes. Even in a prototype state, this workflow demonstrates how the dashboard could support benchmarking, messaging, and strategic comparison across a national set of institutions.
+- `Ranked Dot Plot`: single-metric ranking
+- `Bubble Map`: regional context and geographic selection
+- `Scatter Plot`: tradeoffs and outliers
+- `Time Series`: historical comparison of pinned schools
+- `Parallel Coordinates`: multi-metric profile comparison
 
-## Some Observations
-It is important to state clearly that the current prototype does not use real college data at all. The values shown in the dashboard are entirely synthetic and are only being used to test layout, linking behavior, chart interactions, and the general storytelling flow of the interface. Any apparent pattern in the current version should therefore be treated as a demonstration of what the dashboard can show, not as a factual claim about any real institution.
+## Current Limitations
+These are important to know when interpreting the current build:
 
-That said, the prototype already suggests the kinds of observations the finished dashboard could support once real data is integrated. For example, we could identify schools that appear to offer stronger post-graduation earnings at a relatively lower price point, or schools that look similar in cost but differ sharply in graduation rate or debt burden. We could also compare whether a pinned group of schools moves together over time or whether one school's outcomes improve more quickly than its peers. In the full version, the map and multi-attribute views could further support observations about regional clusters, affordability-access tradeoffs, and which institutions seem unusually strong or weak relative to their broader profile.
+- Only `College Scorecard` is included; no additional external enrichment datasets were added.
+- The dashboard sample is limited to the curated `144`-school set used in the processed files.
+- The map is geographically real for the included school metadata, but it only renders the contiguous U.S. view.
+- The dashboard supports imputed mode, but imputed values are not yet marked with per-mark chart encodings.
+- The processor-side imputation workflow is still somewhat separate from the main raw-panel build path.
+- The dashboard depends on remote CDN assets and therefore is not fully offline-ready.
 
-## Things Left to Do
-### Features Missing, In Progress, or Still Being Tested
-- Activate the "Enable Imputation" control and connect it to a real missing-data workflow.
-- Distinguish observed values from imputed values visually across charts.
-- Expand the bubble map so it contributes more analytic value, potentially through a toggle with a similarity-based MDS view.
-- Add more visual polish, including richer legends, clearer explanatory notes, stronger tooltips, and better hover coordination between charts.
-- Implement more of the global filters proposed earlier, including region, control type, and size category.
-- Replace synthetic map placement with real school coordinates.
-- Add chart annotations or narrative callouts to make the storytelling flow more explicit.
+## Submission-Oriented Summary
+The current repository already contains:
 
-### Data Collection, Cleaning, and Processing
-- Collect the real source datasets, including College Scorecard, Opportunity Insights, and Niche-style contextual fields.
-- Standardize formats and variable definitions across sources.
-- Match institutions across datasets using identifiers and carefully review ambiguous school-name matches.
-- Check year coverage for each variable and document which metrics are longitudinal versus snapshot-only.
-- Profile missing values throughout the combined dataset.
-- Decide when imputation is appropriate and when missingness should remain visible to the user.
-- Validate that metric definitions remain consistent across years.
-- Confirm that included schools satisfy the intended sampling and inclusion rules.
-- Perform quality assurance on the final merged dataset so the dashboard rests on a reliable and interpretable data foundation.
+- the full browser client
+- the processor pipeline
+- the merged raw dashboard CSV
+- the merged imputed dashboard CSV
+- school metadata with real coordinates
+- the raw Scorecard download used to derive the processed files
+
+This means the project is no longer just a design prototype. It is a real-data dashboard with linked interactive views, a working dataset-mode toggle for imputation, and a documented processor path for rebuilding the underlying data products.

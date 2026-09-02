@@ -1,0 +1,145 @@
+.time-series-root {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.25rem;
+}
+
+.time-series-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.time-series-heading {
+  min-width: 0;
+  display: grid;
+  gap: 0.14rem;
+}
+
+.time-series-title {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 600;
+  color: #1c2a25;
+  padding-left: 0.46rem;
+  border-left: 3px solid color-mix(in srgb, var(--accent-warm) 84%, #ffd7b5 16%);
+}
+
+.time-series-subtitle {
+  font-size: clamp(0.86rem, 1.02vw, 0.98rem);
+  color: #53645d;
+}
+
+.time-series-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.time-series-control-label {
+  font-size: 0.82rem;
+  color: #4a5d56;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.time-series-control-select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 10.25rem;
+  max-width: 12.5rem;
+  border: 1px solid #c6d7cf;
+  border-radius: 0.42rem;
+  background-color: #f6fbf8;
+  background-image:
+    linear-gradient(45deg, transparent 50%, color-mix(in srgb, var(--accent-warm) 74%, #3b2b20 26%) 50%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-warm) 74%, #3b2b20 26%) 50%, transparent 50%);
+  background-position:
+    calc(100% - 0.78rem) 50%,
+    calc(100% - 0.53rem) 50%;
+  background-size: 0.31rem 0.31rem, 0.31rem 0.31rem;
+  background-repeat: no-repeat;
+  color: color-mix(in srgb, var(--accent-warm) 78%, #3a2416 22%);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.34rem 1.6rem 0.34rem 0.42rem;
+  cursor: pointer;
+  transition: border-color 120ms ease-in, box-shadow 120ms ease-in, background-color 120ms ease-in;
+}
+
+.time-series-control-select option {
+  color: color-mix(in srgb, var(--accent-warm) 82%, #2f1f14 18%);
+}
+
+.time-series-control-select:hover {
+  background-color: #edf5f1;
+}
+
+.time-series-control-select:focus,
+.time-series-control-select:focus-visible {
+  outline: none;
+  border-color: #92b4a7;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #92b4a7 28%, transparent);
+}
+
+.time-series-control-select option:disabled {
+  color: color-mix(in srgb, var(--accent-warm) 32%, #9a9a9a 68%);
+  text-decoration: line-through;
+}
+
+.time-series-content {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.time-series-svg {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.time-series-empty-state {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.58rem;
+  border: 1px dashed color-mix(in srgb, #176b5c 56%, #88b3a5 44%);
+  background: linear-gradient(155deg, #f3f8f4, #e8f4ef);
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 0.45rem;
+  padding: 0.8rem;
+}
+
+.time-series-empty-state h2 {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: clamp(1.02rem, 1.32vw, 1.22rem);
+  letter-spacing: 0.01em;
+  color: #1c2a25;
+}
+
+.time-series-empty-state p {
+  color: #53645d;
+  font-size: clamp(0.88rem, 1.05vw, 0.98rem);
+  line-height: 1.35;
+}
+
+@media (max-width: 980px) {
+  .time-series-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .time-series-controls {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
